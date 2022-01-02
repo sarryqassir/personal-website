@@ -1,0 +1,11 @@
+inspiration:
+    - https://www.quora.com/What-are-some-nice-examples-of-a-developers-personal-websites
+    - https://dbarochiya.github.io/me/
+    - https://www.youtube.com/watch?v=I2UBjN5ER4s
+
+ideas:
+    - create to do list or something to hold notes on the websites
+        - add simple log in?
+    - dark/ light mode
+    - adjust based on screen size: https://www.w3schools.com/css/css_rwd_mediaqueries.asp
+    - polish labs from school to show knowledge and use of concepts
