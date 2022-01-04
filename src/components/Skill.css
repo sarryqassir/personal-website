@@ -1,0 +1,13 @@
+.skill-name {
+  position: absolute;
+  left: 0;
+}
+
+.rating-num {
+  position: relative;
+  right: -53%;
+}
+
+span {
+  margin-left: 0.05rem;
+}

@@ -1,14 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 // import "../App.css";
 import { Button } from "./Button";
 import "./HeroSection.css";
+import skills from "./skills.json";
 
 function HeroSection() {
-  const [click, setClick] = useState(false);
+  const [count, setCount] = useState(0);
+  const [muted, setMuted] = useState(true);
+  const [srcVid, setSrcVid] = useState(skills.bgVids[0].vid);
 
   const bgVidRef = useRef(null);
+
   const handlePlayVideo = () => {
-    bgVidRef.current.paused
+    bgVidRef.current.paused && bgVidRef.current.style.display !== "none"
       ? bgVidRef.current.play()
       : bgVidRef.current.pause();
   };
@@ -25,26 +29,33 @@ function HeroSection() {
   };
 
   const handleToggleMute = () => {
-    setClick(!click);
     bgVidRef.current.pause();
-    bgVidRef.current.muted = !bgVidRef.current.muted;
+    setMuted(!muted);
   };
+
+  useEffect(() => {
+    bgVidRef.current.muted = muted;
+  });
+
+  const handleChangeVideo = () => {
+    if (count >= skills.bgVids.length - 1) setCount(0);
+    else setCount(count + 1);
+  };
+
+  useEffect(() => {
+    setSrcVid(skills.bgVids[count].vid);
+  }, [count]);
 
   return (
     <div
-      className="hero-container"
       onClick={handlePlayVideo}
+      className="hero-container"
       ref={heroContainerStyle}
     >
       <div className="bgVid-container">
-        <video
-          ref={bgVidRef}
-          src="/videos/video-2.mp4"
-          type="video/mp4"
-          autoPlay
-          muted
-          loop
-        />
+        <video key={srcVid} ref={bgVidRef} autoPlay loop>
+          <source src={srcVid} type="video/mp4" />
+        </video>
       </div>
       <h1>About me</h1>
       <p>
@@ -73,7 +84,7 @@ function HeroSection() {
         >
           <i
             className={
-              click ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark"
+              muted ? "fa-solid fa-volume-xmark" : "fa-solid fa-volume-high"
             }
           />
         </Button>
@@ -85,7 +96,21 @@ function HeroSection() {
         >
           Toggle Video
         </Button>
+        <Button
+          className="btns"
+          buttonStyle="btn--primary"
+          buttonSize="btn--large"
+          onClick={handleChangeVideo}
+        >
+          Change Video
+        </Button>
       </div>
+      <details>
+        <summary>
+          {JSON.stringify(skills.bgVids[count].sum).replace(/"/g, "")}
+        </summary>
+        {JSON.stringify(skills.bgVids[count].desc).replace(/"/g, "")}
+      </details>
     </div>
   );
 }

@@ -1,0 +1,24 @@
+/* .star-container {
+  background: #0000ff;
+  overflow: auto;
+  position: relative;
+  display: inline-block;
+}
+
+.bg-star {
+  color: aliceblue;
+}
+
+.main-star {
+  position: absolute;
+  width: 50%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  color: gold;
+} */
+
+.main-star i {
+  display: inline;
+  overflow: hidden;
+}

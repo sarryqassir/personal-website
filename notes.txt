@@ -9,3 +9,6 @@ ideas:
     - dark/ light mode
     - adjust based on screen size: https://www.w3schools.com/css/css_rwd_mediaqueries.asp
     - polish labs from school to show knowledge and use of concepts
+    - use todolist to make app to create json files, easier entry of data (like for skills)
+    - donation payment processing
+    - login for todolist or smth
