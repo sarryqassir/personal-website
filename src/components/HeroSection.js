@@ -63,7 +63,7 @@ function HeroSection() {
         through trying new things and testing myself on what I already know.
       </p>
       <img
-        src="/images/img-1.jpg"
+        src="images/img-1.jpg"
         alt="placeholder for myself"
         width="460"
         height="460"
