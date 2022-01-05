@@ -3,11 +3,12 @@ import React, { useRef, useState, useEffect } from "react";
 import { Button } from "./Button";
 import "./HeroSection.css";
 import skills from "./skills.json";
+import assets from "../assets/index";
 
 function HeroSection() {
   const [count, setCount] = useState(0);
   const [muted, setMuted] = useState(true);
-  const [srcVid, setSrcVid] = useState(skills.bgVids[0].vid);
+  const [srcVid, setSrcVid] = useState(assets.videos[skills.bgVids[0].vid]);
 
   const bgVidRef = useRef(null);
 
@@ -43,7 +44,7 @@ function HeroSection() {
   };
 
   useEffect(() => {
-    setSrcVid(skills.bgVids[count].vid);
+    setSrcVid(assets.videos[skills.bgVids[count].vid]);
   }, [count]);
 
   return (
@@ -53,7 +54,14 @@ function HeroSection() {
       ref={heroContainerStyle}
     >
       <div className="bgVid-container">
-        <video key={srcVid} ref={bgVidRef} autoPlay loop>
+        <video
+          key={srcVid}
+          ref={bgVidRef}
+          poster={assets.images.alhamdulillah}
+          autoPlay
+          loop
+          playsInline
+        >
           <source src={srcVid} type="video/mp4" />
         </video>
       </div>
@@ -63,7 +71,7 @@ function HeroSection() {
         through trying new things and testing myself on what I already know.
       </p>
       <img
-        src="images/img-1.jpg"
+        src={assets.images.tarik}
         alt="placeholder for myself"
         width="460"
         height="460"
