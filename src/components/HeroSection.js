@@ -71,6 +71,7 @@ function HeroSection() {
         through trying new things and testing myself on what I already know.
       </p>
       <img
+        className="hero-img"
         src={assets.images.tarik}
         alt="placeholder for myself"
         width="460"
