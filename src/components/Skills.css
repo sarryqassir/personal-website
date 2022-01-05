@@ -1,28 +1,30 @@
 .skills-container {
-  justify-content: center;
-  align-items: center;
   text-align: center;
   /* background-color: darkturquoise; */
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
   padding: 20px 180px;
+  transition: all 0.3s linear;
 }
 
+/* Thematic break line */
 hr {
   width: 100%;
   margin: 10px auto;
 }
 
+/* Header */
 h1 {
   color: #fff;
   font-size: 54px;
   text-align: center;
 }
 
-ul {
+.skills-list {
   list-style-type: none;
+  transition: all 0.3s linear;
 }
 
-li {
+.skill-item {
   position: relative;
   margin-top: 8px;
   color: #fff;
@@ -30,28 +32,43 @@ li {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   transition: all 0.3s linear;
+  padding: 2px;
 }
 
-li:hover {
+.skill-item:hover {
   /* background: #f2f2f2; */
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
   transition: all 0.3s;
 }
 
-li:hover span {
+.skill-item:hover span {
   margin-left: 0.1rem;
   transition: all 0.3s;
 }
 
-li:hover .rating-num {
-  /* margin-right: 6.8rem; */
-  transition: all 0.3s;
+.skill-item:hover .skill-name {
+  margin-left: 0.2rem;
 }
 
-li span {
+/* .skill-item:hover .num-rating {
+  margin-left: 0;
+} */
+
+/* .filter-bar {
+} */
+
+#star-sort-btn {
+  font-size: 18px;
+  right: -20px;
+  position: relative;
+}
+
+.skill-item span {
   transition: all 0.3s linear;
 }
 
-li .rating-num {
-  transition: all 0.3s linear;
+@media only screen and (max-width: 600px) {
+  .skills-container {
+    padding: 20px 20px;
+  }
 }
