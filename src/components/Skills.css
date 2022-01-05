@@ -26,13 +26,12 @@ h1 {
 
 .skill-item {
   position: relative;
-  margin-top: 8px;
   color: #fff;
   font-size: 18px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   transition: all 0.3s linear;
-  padding: 2px;
+  padding: 5px 0px;
 }
 
 .skill-item:hover {
@@ -63,12 +62,34 @@ h1 {
   position: relative;
 }
 
+#name-sort-btn {
+  font-size: 18px;
+  right: 20px;
+  position: relative;
+}
+
 .skill-item span {
   transition: all 0.3s linear;
 }
 
-@media only screen and (max-width: 600px) {
+.filters button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000,
+    1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
+}
+
+@media only screen and (max-width: 400px) {
   .skills-container {
-    padding: 20px 20px;
+    padding: 20px;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .skills-container {
+    padding: 20px 40px;
   }
 }

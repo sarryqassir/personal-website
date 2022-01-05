@@ -13,22 +13,18 @@
 }
 
 .glom-enter {
-  /* 0 */
-  transform: translateY(0);
-  padding-bottom: 30px;
+  margin-bottom: 30px;
   opacity: 0;
 }
 .glom-enter-active {
   opacity: 1;
-  /* transform: translateY(100%); */
-  padding-bottom: -30px;
+  margin-bottom: 0px;
   transition: all 100ms;
 }
 .glom-exit {
   opacity: 1;
 }
 .glom-exit-active {
-  /* 0 */
   opacity: 0;
   transition: all 100ms;
 }

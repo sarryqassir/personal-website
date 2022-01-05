@@ -50,41 +50,43 @@ function Skills() {
       filter how many stars
       drop down menu to sort by type (program/language, idea/theory, etc)
       */}
-      <button
-        id="name-sort-btn"
-        className={
-          sorting === "name"
-            ? sortOrder === "descending"
-              ? "fa-solid fa-sort-down"
-              : sortOrder === "ascending"
-              ? "fa-solid fa-sort-up"
+      <div className="filters">
+        <button
+          id="name-sort-btn"
+          className={
+            sorting === "name"
+              ? sortOrder === "descending"
+                ? "fa-solid fa-sort-down"
+                : sortOrder === "ascending"
+                ? "fa-solid fa-sort-up"
+                : "fa-solid fa-sort"
               : "fa-solid fa-sort"
-            : "fa-solid fa-sort"
-        }
-        type="button"
-        onClick={handleSortNames}
-      />
-      <input
-        className="filter-bar"
-        type="text"
-        placeholder="Filter through skills"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      {/* if its clicked a lot, ask user if third option (no sort) is good or should be removed */}
-      <button
-        id="star-sort-btn"
-        className={
-          sorting === "rating"
-            ? sortOrder === "descending"
-              ? "fa-solid fa-sort-down"
-              : sortOrder === "ascending"
-              ? "fa-solid fa-sort-up"
+          }
+          type="button"
+          onClick={handleSortNames}
+        />
+        <input
+          className="filter-bar"
+          type="text"
+          placeholder="Filter through skills"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {/* if its clicked a lot, ask user if third option (no sort) is good or should be removed */}
+        <button
+          id="star-sort-btn"
+          className={
+            sorting === "rating"
+              ? sortOrder === "descending"
+                ? "fa-solid fa-sort-down"
+                : sortOrder === "ascending"
+                ? "fa-solid fa-sort-up"
+                : "fa-solid fa-sort"
               : "fa-solid fa-sort"
-            : "fa-solid fa-sort"
-        }
-        type="button"
-        onClick={handleSortStars}
-      />
+          }
+          type="button"
+          onClick={handleSortStars}
+        />
+      </div>
       <TransitionGroup>
         <ul className="skills-list">
           {/* maybe dynamically order the list by number to see what needs to be moved */}
