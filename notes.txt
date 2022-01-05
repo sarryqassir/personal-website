@@ -13,3 +13,10 @@ ideas:
     - use todolist to make app to create json files, easier entry of data (like for skills)
     - donation payment processing
     - login for todolist or smth
+    - section for any user to give feedback
+
+    polishing:
+    - 
+
+    research:
+    - XSS/ vulnerabilities
