@@ -3,6 +3,9 @@ inspiration:
     -http://www.pascalvangemert.nl/
     - https://dbarochiya.github.io/me/
     - https://www.youtube.com/watch?v=I2UBjN5ER4s
+    - https://bestofreactjs.com/repo/reactgular-video-background-react-audio-video
+
+chrome://flags/#enable-force-dark
 
 ideas:
     - create to do list or something to hold notes on the websites
@@ -14,6 +17,8 @@ ideas:
     - donation payment processing
     - login for todolist or smth
     - section for any user to give feedback
+    - customize page title <title/> 
+    
 
     polishing:
     - 
