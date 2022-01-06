@@ -7,16 +7,18 @@ import Products from "./components/pages/Products";
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Navbar />
-      <Home />
       <Routes>
-        {/* <Route path="/" element={<Home />} />
-        <Route path="/personal-website" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
       </Routes>
     </Router>
   );
 }
+
+// redirect 404, /*
+// wtf is 404
+// public url thing to start from home page
 
 export default App;
