@@ -58,6 +58,7 @@ function HeroSection() {
           key={srcVid}
           ref={bgVidRef}
           poster={assets.images.alhamdulillah}
+          alt={skills.bgVids[count].sum}
           autoPlay
           loop
           playsInline
@@ -86,6 +87,7 @@ function HeroSection() {
       </p>
       <div className="hero-btns">
         <Button
+          title="Toggle mute the video"
           className="btns"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
@@ -115,7 +117,7 @@ function HeroSection() {
         </Button>
       </div>
       <details>
-        <summary>
+        <summary title="Expand to read more about the video">
           {JSON.stringify(skills.bgVids[count].sum).replace(/"/g, "")}
         </summary>
         {JSON.stringify(skills.bgVids[count].desc).replace(/"/g, "")}
