@@ -49,30 +49,34 @@ h1 {
   margin-left: 0.2rem;
 }
 
-/* .skill-item:hover .num-rating {
-  margin-left: 0;
-} */
+.filter-bar::placeholder {
+  color: black;
+  opacity: 75%;
+}
 
-/* .filter-bar {
-} */
-
-#star-sort-btn {
+#rating-sort-btn {
   font-size: 18px;
-  right: -20px;
-  position: relative;
+  flex-grow: 1;
+  padding: 0;
 }
 
 #name-sort-btn {
   font-size: 18px;
-  right: 20px;
-  position: relative;
+  flex-grow: 1;
+  padding: 0;
 }
 
 .skill-item span {
   transition: all 0.3s linear;
 }
 
-.filters button {
+.skill-filters {
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.skill-filters button {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -82,14 +86,27 @@ h1 {
     1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 900px) {
   .skills-container {
-    padding: 20px;
+    padding: 20px 80px;
+  }
+  .skill-filters button {
+    padding: 0px 80px;
   }
 }
-
 @media only screen and (max-width: 680px) {
   .skills-container {
     padding: 20px 40px;
+  }
+  .skill-filters button {
+    padding: 0px 40px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .skills-container {
+    padding: 20px 10px;
+  }
+  .skill-filters button {
+    padding: 0px 10px;
   }
 }
