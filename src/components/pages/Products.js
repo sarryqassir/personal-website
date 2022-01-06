@@ -1,8 +1,8 @@
 import React from "react";
-import StarRating from "../StarRating";
+import TodoListApp from "../TodoListApp";
 
 function Products() {
-  return <StarRating />;
+  return <TodoListApp />;
 }
 
 export default Products;
