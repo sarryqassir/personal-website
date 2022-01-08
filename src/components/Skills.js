@@ -14,10 +14,8 @@ function Skills() {
 
   useMemo(
     () =>
-      skills.skills.sort(
-        (a, b) =>
-          (sortOrder ? a[sorting] > b[sorting] : a[sorting] < b[sorting]) ===
-            false && -1
+      skills.skills.sort((a, b) =>
+        (sortOrder ? a[sorting] > b[sorting] : a[sorting] < b[sorting]) ? 1 : -1
       ),
     [sortOrder, sorting]
   );
@@ -25,10 +23,6 @@ function Skills() {
   const filteredSkills = skills.skills.filter((skill) =>
     skill.name.toLowerCase().includes(search.toLowerCase())
   );
-
-  // const filteredSkills = skills.skills.filter((skill) =>
-  //   skill.name.toLowerCase().includes(search.toLowerCase())
-  // );
 
   function handleSort(item) {
     if (sorting !== item) {
