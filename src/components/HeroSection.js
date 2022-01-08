@@ -12,6 +12,8 @@ function HeroSection() {
 
   const bgVidRef = useRef(null);
 
+  const mainImgRef = useRef(null);
+
   const handlePlayVideo = () => {
     bgVidRef.current.paused && bgVidRef.current.style.display !== "none"
       ? bgVidRef.current.play()
@@ -47,6 +49,12 @@ function HeroSection() {
     setSrcVid(assets.videos[skills.bgVids[count].vid]);
   }, [count]);
 
+  const handleImgClick = () => {
+    mainImgRef.current.style.opacity > 0.01
+      ? (mainImgRef.current.style.opacity = 0.01)
+      : (mainImgRef.current.style.opacity = 1);
+  };
+
   return (
     <div
       onClick={handlePlayVideo}
@@ -73,10 +81,13 @@ function HeroSection() {
       </p>
       <img
         className="hero-img"
+        ref={mainImgRef}
         src={assets.images.tarik}
         alt="placeholder for myself"
         width="460"
         height="460"
+        title="Click To Toggle"
+        onClick={handleImgClick}
       />
       <p>
         <strong>Name: </strong>
