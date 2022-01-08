@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import "./HeroSection.css";
 import skills from "./skills.json";
 import assets from "../assets/index";
+import { calculateAge } from "./Utils";
 
 function HeroSection() {
   const [count, setCount] = useState(0);
@@ -92,7 +93,7 @@ function HeroSection() {
       <p>
         <strong>Name: </strong>
         Sarry <br />
-        <strong>Age: </strong> 20 <br />
+        <strong>Age: </strong> {calculateAge("September 5, 2001")} <br />
         <strong>Location: </strong>
         Toronto, Canada
       </p>
