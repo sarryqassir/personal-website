@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import "./Todo.css";
+import { debounce } from "lodash";
+import { useSpring } from "react-spring";
 
 function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   const [editting, setEditting] = useState(false);
   const [hoveringDelete, setHoveringDelete] = useState(false);
   //   const [tempName, setTempName] = useState();
+
+  const inputRef = useRef(null);
+  const inputRefFake = useRef(null);
 
   //use effect to actually set the main state name?
 
@@ -12,6 +18,8 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   }
 
   function handleEditTodo(e) {
+    inputRef.current.style.height = "0px";
+    adjustTextAreaSize();
     editTodo(todo.id, e);
   }
 
@@ -20,7 +28,14 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
       deleteTodo(todo.id);
   }
 
+  function adjustTextAreaSize() {
+    inputRefFake.current.style.width = inputRef.current.offsetWidth + "px";
+    inputRef.current.style.height = inputRefFake.current.scrollHeight + "px";
+  }
+
   function toggleInputMode() {
+    console.log(inputRef.current.rows);
+    adjustTextAreaSize();
     setEditting(!editting);
   }
 
@@ -28,50 +43,87 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
     setEditting(!editting);
   }
 
+  useEffect(() => {
+    window.addEventListener("resize", debounce(adjustTextAreaSize, 200));
+    adjustTextAreaSize();
+    return () => {
+      window.removeEventListener("resize", debounce(adjustTextAreaSize, 100));
+    };
+  }, []);
+
   // add cancel/ revert button
-  const inputField = (
-    <input
-      key={todo.id}
-      type="text"
-      value={todo.name}
-      onKeyDown={(e) =>
-        e.key === "Enter"
-          ? toggleInputMode()
-          : e.key === "Escape" && cancelEdit(e)
-      }
-      onChange={handleEditTodo}
-      onSubmit={toggleInputMode}
-    />
-  );
+  // double click to edit
+
   //12:41 100%
   //2:41 41% (no yt videos, not much action on the screen)
   //3:41 9%
-  const staticField = <span>{todo.name}</span>;
 
   return (
-    <label>
-      <input
-        type="checkbox"
-        checked={todo.complete}
-        onChange={handleTodoClick}
-      />
-      {editting ? inputField : staticField}
-      <button className="edit-btn" type="button" onClick={toggleInputMode}>
-        <i className="fa-solid fa-pen-to-square" />
-      </button>
-      <button
-        className="delete-btn"
-        type="button"
-        onClick={handleDelete}
-        onMouseOver={() => setHoveringDelete(true)}
-        onMouseOut={() => setHoveringDelete(false)}
-      >
-        <i
-          className={
-            hoveringDelete ? "fa-solid fa-trash-arrow-up" : "fa-solid fa-trash"
-          }
+    <label className="todo-item">
+      <span className="complete-btn-span">
+        <input
+          type="checkbox"
+          className="complete-btn"
+          title="Complete Task"
+          checked={todo.complete}
+          onChange={handleTodoClick}
         />
-      </button>
+      </span>
+      <span className="todo-name">
+        <textarea
+          key={todo.id}
+          ref={inputRef}
+          type="text"
+          value={todo.name}
+          onKeyDown={(e) =>
+            e.key === "Enter"
+              ? toggleInputMode()
+              : e.key === "Escape" && cancelEdit(e)
+          }
+          onChange={handleEditTodo}
+          onSubmit={() => setEditting(!editting)}
+          readOnly={!editting}
+          max-rows={-1}
+        />
+        <textarea
+          key={todo.id + 1}
+          ref={inputRefFake}
+          value={todo.name}
+          className="height-adjuster"
+          rows={1}
+          readOnly
+        />
+      </span>
+      <div className="btn-container">
+        <button
+          className="edit-btn"
+          type="button"
+          onClick={toggleInputMode}
+          title="Edit"
+        >
+          <i
+            className={
+              editting ? "fa-solid fa-pen" : "fa-solid fa-pen-to-square"
+            }
+          />
+        </button>
+        <button
+          className="delete-btn"
+          type="button"
+          title="Delete"
+          onClick={handleDelete}
+          onMouseOver={() => setHoveringDelete(true)}
+          onMouseOut={() => setHoveringDelete(false)}
+        >
+          <i
+            className={
+              hoveringDelete
+                ? "fa-solid fa-trash-arrow-up"
+                : "fa-solid fa-trash"
+            }
+          />
+        </button>
+      </div>
     </label>
   );
 }
