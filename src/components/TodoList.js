@@ -3,7 +3,7 @@ import Todo from "./Todo";
 
 function TodoList({ todos, toggleTodo, editTodo, deleteTodo }) {
   return (
-    <div>
+    <div className="todo-list">
       {todos.map((todo) => {
         return (
           <Todo
