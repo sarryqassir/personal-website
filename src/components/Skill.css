@@ -11,20 +11,3 @@
 .star-rating span {
   margin-left: 0.05rem;
 }
-
-.glom-enter {
-  margin-bottom: 20px;
-  opacity: 0.7;
-}
-.glom-enter-active {
-  opacity: 1;
-  margin-bottom: 0px;
-  transition: all 200ms;
-}
-.glom-exit {
-  opacity: 1;
-}
-.glom-exit-active {
-  opacity: 0.7;
-  transition: all 200ms;
-}
