@@ -1,69 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Skill from "./Skill";
 import "./Skills.css";
 import skills from "./skills.json";
 import { v4 as uuidv4 } from "uuid";
-import { TransitionGroup } from "react-transition-group";
+import { useTransition, animated } from "react-spring";
 import ReactTooltip from "react-tooltip";
 import { capitalizeFirst } from "./Utils.js";
 
 function Skills() {
-  const [search, setSearch] = useState();
-  const [sortOrder, setSortOrder] = useState("descending");
+  const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState(false);
   const [sorting, setSorting] = useState("rating");
-  // filterSkills = (e) => {
-  //   let keyword = e.target.value;
-  //   setSearch(keyword);
-  // };
 
-  skills.skills.sort((a, b) =>
-    a[sorting] > b[sorting]
-      ? sortOrder === "ascending"
-        ? 1
-        : -1
-      : sortOrder === "descending"
-      ? 1
-      : -1
+  useMemo(
+    () =>
+      skills.skills.sort(
+        (a, b) =>
+          (sortOrder ? a[sorting] > b[sorting] : a[sorting] < b[sorting]) ===
+            false && -1
+      ),
+    [sortOrder, sorting]
   );
+
+  const filteredSkills = skills.skills.filter((skill) =>
+    skill.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // const filteredSkills = skills.skills.filter((skill) =>
+  //   skill.name.toLowerCase().includes(search.toLowerCase())
+  // );
 
   function handleSort(item) {
     if (sorting !== item) {
       setSorting(item);
-      setSortOrder("descending");
-    } else
-      setSortOrder(sortOrder === "descending" ? "ascending" : "descending");
+      setSortOrder(false);
+    } else setSortOrder(!sortOrder);
   }
 
-  const dynamicSortIcon = (type) =>
-    sorting === type
-      ? sortOrder === "descending"
-        ? "fa-solid fa-sort-down"
-        : sortOrder === "ascending"
+  const dynamicSortIcon = (name) =>
+    sorting === name
+      ? sortOrder
         ? "fa-solid fa-sort-up"
-        : "fa-solid fa-sort"
+        : "fa-solid fa-sort-down"
       : "fa-solid fa-sort";
 
-  const dynamicTooltip = (type) =>
-    sorting === type
-      ? sortOrder === "descending" || sortOrder === "ascending"
-        ? capitalizeFirst(sortOrder)
-        : "Sort by " + capitalizeFirst(type)
-      : "Sort by " + capitalizeFirst(type);
+  const dynamicTooltip = (name) =>
+    sorting === name
+      ? sortOrder
+        ? "Ascending"
+        : "Descending"
+      : "Sort by " + capitalizeFirst(name);
+
+  const transition = useTransition(filteredSkills, {
+    from: { opacity: 0, marginTop: 5 },
+    enter: { opacity: 1, maxHeight: 50, marginTop: 5 },
+    leave: { opacity: 0, maxHeight: 0, marginTop: 0 },
+  });
+
+  const fadeInListSkills = transition((style, skill) => {
+    return (
+      <animated.ul style={style} className="skills-list">
+        <Skill
+          className="skill-item"
+          key={uuidv4()}
+          name={skill.name}
+          rating={skill.rating}
+          data={skill}
+        />
+      </animated.ul>
+    );
+  });
 
   return (
     <div className="skills-container">
       <h1>Skills</h1>
       <hr />
-      {/* maybe make items selectable/ favourites
-      filter how many stars
-      drop down menu to sort by type (program/language, idea/theory, etc)
-      */}
       <div className="skill-filters">
         {/* make mini button compontent */}
         <div className="name-sort-btn-div">
           <button
-            key="name-sort-btn"
             id="name-sort-btn"
+            key="name-sort-btn"
             className={dynamicSortIcon("name")}
             type="button"
             data-tip={dynamicTooltip("name")}
@@ -76,13 +93,12 @@ function Skills() {
           className="filter-bar"
           type="text"
           placeholder="Filter skills"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value.trim())}
         />
-        {/* if its clicked a lot, ask user if third option (no sort) is good or should be removed */}
         <div className="rating-sort-btn-div">
           <button
-            key="rating-sort-btn"
             id="rating-sort-btn"
+            key="rating-sort-btn"
             className={dynamicSortIcon("rating")}
             type="button"
             data-tip={dynamicTooltip("rating")}
@@ -90,45 +106,23 @@ function Skills() {
             onClick={() => handleSort("rating")}
           />
           <ReactTooltip
-            key="rating-btn-tooltip"
             id="rating-btn"
+            key="rating-btn-tooltip"
             effect="solid"
           />
         </div>
       </div>
-      <TransitionGroup>
-        <ul className="skills-list">
-          {/* maybe dynamically order the list by number to see what needs to be moved */}
-          {skills.skills
-            .filter((skill) => {
-              if (!search) return skill;
-              else if (skill.name.toLowerCase().includes(search.toLowerCase()))
-                return skill;
-              return false;
-            })
-            .map((skill) => {
-              // move csstransition here
-              // or refactor inProp based on whos leaving here
-              return (
-                <Skill
-                  className="skill-item"
-                  key={uuidv4()}
-                  name={skill.name}
-                  rating={skill.rating}
-                  // inProp={inProp}
-                />
-              );
-            })}
-        </ul>
-      </TransitionGroup>
-      <p>This project was made using React</p>
+      {fadeInListSkills}
+      <span className="skills-madeby-text">
+        <p>This project was made using React</p>
+      </span>
       <a
         href="https://github.com/sarryqassir/personal-website"
         target="_blank"
         rel="noreferrer noopener"
-        className="fa-solid fa-star"
+        className="fa-brands fa-github"
       >
-        Github
+        <p>Github</p>
       </a>
     </div>
   );
