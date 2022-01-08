@@ -1,9 +1,10 @@
 .skills-container {
   text-align: center;
-  /* background-color: darkturquoise; */
+  background-color: darkturquoise;
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
   padding: 20px 180px;
-  transition: all 0.3s linear;
+  /* transition: all 0.3s linear; */
+  overflow: hidden;
 }
 
 /* Thematic break line */
@@ -21,7 +22,7 @@ h1 {
 
 .skills-list {
   list-style-type: none;
-  transition: all 0.3s linear;
+  /* transition: all 0.3s linear; */
 }
 
 .skill-item {
@@ -30,19 +31,19 @@ h1 {
   font-size: 18px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  transition: all 0.3s linear;
+  /* transition: all 0.3s linear; */
   padding: 5px 0px;
 }
 
 .skill-item:hover {
   /* background: #f2f2f2; */
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
 }
 
 .skill-item:hover span {
   margin-left: 0.1rem;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
 }
 
 .skill-item:hover .skill-name {
@@ -66,9 +67,9 @@ h1 {
   padding: 0;
 }
 
-.skill-item span {
-  transition: all 0.3s linear;
-}
+/* .skill-item span {
+  /* transition: all 0.3s linear; 
+} */
 
 .skill-filters {
   padding: 5px 20px;
@@ -84,6 +85,29 @@ h1 {
   color: white;
   text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000,
     1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
+}
+
+.skills-madeby-text {
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.fa-github {
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fa-github p {
+  font-size: 28px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  margin-left: 0.2rem;
 }
 
 @media only screen and (max-width: 900px) {
