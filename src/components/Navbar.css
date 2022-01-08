@@ -31,9 +31,10 @@
   align-items: center;
 }
 
-.fa-typo3 {
-  margin-left: 0.5rem;
-  font-size: 1.8rem;
+.nerd-emoji {
+  /* margin-left: 0.5rem; */
+  margin-top: 5px;
+  margin-right: 3px;
 }
 
 .nav-menu {
