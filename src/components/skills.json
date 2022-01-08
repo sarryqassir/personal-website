@@ -17,7 +17,8 @@
     { "name": "Python", "rating": 3 },
     { "name": "Object Oriented Programming", "rating": 4 },
     { "name": "Data Structures & Algorithms", "rating": 2 },
-    { "name": "Typescript", "rating": 1 }
+    { "name": "Typescript", "rating": 1 },
+    { "name": "Google", "rating": 4.5 }
   ],
   "bgVids": [
     {
@@ -27,7 +28,7 @@
     },
     {
       "vid": "tarikCereal",
-      "desc": "",
+      "desc": "Easy 4k from the cloest while munching on a bowl of cereal",
       "sum": "Tarik the infamous cereal killer"
     },
     {
