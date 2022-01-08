@@ -1,4 +1,4 @@
-// import React from "react";
+import { /*React*/ useLayoutEffect, useState } from "react";
 
 // https://keycode.info/
 // idk this doesn't work
@@ -14,3 +14,17 @@ export const submitOnEnter = (e) => {
 // pretty cool answers: https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
 export const capitalizeFirst = (s) =>
   (s && s[0].toUpperCase() + s.slice(1)) || "";
+
+// https://stackoverflow.com/a/19014495
+export function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+}
