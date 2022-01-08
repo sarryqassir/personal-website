@@ -50,6 +50,10 @@ h1 {
   margin-left: 0.2rem;
 }
 
+.filter-bar {
+  width: 11rem;
+}
+
 .filter-bar::placeholder {
   color: black;
   opacity: 75%;
@@ -83,8 +87,9 @@ h1 {
   cursor: pointer;
   outline: none;
   color: white;
-  text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000,
-    1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
+  text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+  width: 16px;
+  font-size: 20px !important;
 }
 
 .skills-madeby-text {

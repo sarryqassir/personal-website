@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Todo.css";
 import { debounce } from "lodash";
-import { useSpring } from "react-spring";
 
 function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   const [editting, setEditting] = useState(false);
@@ -71,6 +70,7 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
       </span>
       <span className="todo-name">
         <textarea
+          className="main-name"
           key={todo.id}
           ref={inputRef}
           type="text"
