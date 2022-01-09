@@ -5,7 +5,7 @@ import { debounce } from "lodash";
 function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   const [editting, setEditting] = useState(false);
   const [hoveringDelete, setHoveringDelete] = useState(false);
-  //   const [tempName, setTempName] = useState();
+  const [tempName, setTempName] = useState("");
 
   const inputRef = useRef(null);
   const inputRefFake = useRef(null);
@@ -22,9 +22,11 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
     editTodo(todo.id, e);
   }
 
-  function handleDelete() {
-    window.confirm("Are you sure you want to delete this?") &&
-      deleteTodo(todo.id);
+  function handleDelete(e) {
+    if (!e.shiftKey) {
+      window.confirm("Are you sure you want to delete this?");
+    }
+    deleteTodo(todo.id);
   }
 
   function adjustTextAreaSize() {
@@ -33,13 +35,17 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   }
 
   function toggleInputMode() {
-    console.log(inputRef.current.rows);
     adjustTextAreaSize();
     setEditting(!editting);
+    inputRef.current.focus();
+    setTempName(inputRef.current.value);
+    inputRef.current.value = "";
+    inputRef.current.value = tempName;
   }
 
-  function cancelEdit() {
+  function cancelEdit(e) {
     setEditting(!editting);
+    editTodo(todo.id, tempName, true);
   }
 
   useEffect(() => {
@@ -50,19 +56,12 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
     };
   }, []);
 
-  // add cancel/ revert button
-  // double click to edit
-
-  //12:41 100%
-  //2:41 41% (no yt videos, not much action on the screen)
-  //3:41 9%
-
   return (
     <label className="todo-item">
       <span className="complete-btn-span">
         <input
-          type="checkbox"
           className="complete-btn"
+          type="checkbox"
           title="Complete Task"
           checked={todo.complete}
           onChange={handleTodoClick}
@@ -84,12 +83,13 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           onSubmit={() => setEditting(!editting)}
           readOnly={!editting}
           max-rows={-1}
+          onBlur={() => setEditting(false)}
         />
         <textarea
+          className="height-adjuster"
           key={todo.id + 1}
           ref={inputRefFake}
           value={todo.name}
-          className="height-adjuster"
           rows={1}
           readOnly
         />
