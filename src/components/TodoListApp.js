@@ -43,7 +43,7 @@ function TodoListApp() {
     todoNameRef.current.value = null;
   }
 
-  //   function handleClearTodos() {
+  //   function handleMoveTodos() {
   //     const newTodos = todos.filter((todo) => !todo.complete);
   //     setTodos(newTodos);
   //   }
@@ -54,11 +54,15 @@ function TodoListApp() {
   }
 
   // trim whitespace after edit
-  function editTodo(id, e) {
+  function editTodo(id, e, cancel = false) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
-    todo.name = e.target.value;
+    cancel ? (todo.name = e) : (todo.name = e.target.value);
     setTodos(newTodos);
+  }
+
+  function cancelAdd() {
+    todoNameRef.current.value = null;
   }
 
   return (
@@ -78,15 +82,18 @@ function TodoListApp() {
               placeholder="Add an item"
               ref={todoNameRef}
               type="text"
+              onKeyDown={(e) =>
+                e.key === "Enter"
+                  ? handleAddTodo(e)
+                  : e.key === "Escape" && cancelAdd(e)
+              }
             />
             <button
               className="fa-solid fa-plus"
               title="Add item"
               onClick={handleAddTodo}
-            >
-              {/* <i className="fa-solid fa-plus"></i> */}
-            </button>
-            {/* <button>Clear Completed</button> */}
+            ></button>
+            {/* <button>Move Completed</button> */}
           </span>
         </div>
         <TodoList
