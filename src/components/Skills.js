@@ -20,10 +20,6 @@ function Skills() {
     [sortOrder, sorting]
   );
 
-  const filteredSkills = skills.skills.filter((skill) =>
-    skill.name.toLowerCase().includes(search.toLowerCase())
-  );
-
   function handleSort(item) {
     if (sorting !== item) {
       setSorting(item);
@@ -45,21 +41,37 @@ function Skills() {
         : "Descending"
       : "Sort by " + capitalizeFirst(name);
 
-  const transition = useTransition(filteredSkills, {
-    from: { opacity: 0, marginTop: 5 },
-    enter: { opacity: 1, maxHeight: 50, marginTop: 5 },
-    leave: { opacity: 0, maxHeight: 0, marginTop: 0 },
-  });
+  const filteredSkills = skills.skills.filter((skill) =>
+    skill.name.toLowerCase().includes(search.toLowerCase())
+  );
 
-  const fadeInListSkills = transition((style, skill) => {
+  let height = 0;
+  const transition = useTransition(
+    filteredSkills.map((data) => ({
+      ...data,
+      y: (height += 33) - 33,
+    })),
+    {
+      key: (item) => item.name,
+      from: { height: 0, opacity: 0, y: 0 },
+      leave: { height: 0, opacity: 0, y: 0 },
+      enter: ({ y }) => ({ y, height: 0, opacity: 1 }),
+      update: ({ y }) => ({ y, height: 0 }),
+    }
+  );
+
+  const fadeInListSkills = transition((style, item, t, index) => {
     return (
-      <animated.ul style={style} className="skills-list">
+      <animated.ul
+        style={{ zIndex: skills.skills.length - index, ...style }}
+        className="skills-list"
+      >
         <Skill
           className="skill-item"
           key={uuidv4()}
-          name={skill.name}
-          rating={skill.rating}
-          data={skill}
+          name={item.name}
+          rating={item.rating}
+          data={item}
         />
       </animated.ul>
     );
@@ -106,7 +118,7 @@ function Skills() {
           />
         </div>
       </div>
-      {fadeInListSkills}
+      <div style={{ height }}>{fadeInListSkills}</div>
       <span className="skills-madeby-text">
         <p>This project was made using React</p>
       </span>

@@ -23,6 +23,7 @@ h1 {
 .skills-list {
   list-style-type: none;
   /* transition: all 0.3s linear; */
+  will-change: transform, height, opacity;
 }
 
 .skill-item {
