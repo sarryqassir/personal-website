@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "PT Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .home,
@@ -38,6 +38,23 @@
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-image: url("./assets/transparent-black-50.png");
+  margin-right: 5px !important;
+  border-radius: 20px;
+  /* border: 3px solid; */
 }
 
 /* footer {
