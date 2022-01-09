@@ -5,16 +5,18 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99;
+  font-family: "PT Sans", sans-serif;
 }
 
 .navbar-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 60px;
   max-width: 1500px;
 }
 
@@ -29,16 +31,23 @@
   font-size: 2rem;
   display: flex;
   align-items: center;
+  font-family: inherit;
 }
 
-.nerd-emoji {
-  /* margin-left: 0.5rem; */
-  margin-top: 5px;
-  margin-right: 3px;
+.main-logo {
+  margin-top: 0px;
+  margin-right: 5px;
+}
+
+.main-name {
+  font-family: inherit;
 }
 
 .nav-menu {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-column: repeat(4, auto);
+  grid-column: auto;
   grid-template-columns: repeat(4, auto);
   grid-gap: 10px;
   list-style: none;

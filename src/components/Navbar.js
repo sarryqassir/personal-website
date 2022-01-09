@@ -19,17 +19,19 @@ function Navbar() {
   };
 
   useEffect(() => {
+    window.addEventListener("resize", showButton);
     showButton();
+    return () => window.removeEventListener("resize", showButton);
   }, []);
-
-  window.addEventListener("resize", showButton);
 
   return (
     <nav className="navbar">
       {/* <div className="navbar-container"> */}
       <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-        <span className="nerd-emoji">🤓</span>
-        Sarry
+        <span className="main-logo">
+          <i className="fa-solid fa-igloo" />
+        </span>
+        <span className="main-name">{"Sarry"}</span>
       </Link>
       <div className="menu-icon" onClick={handleClick}>
         <i className={click ? "fas fa-times" : "fas fa-bars"} />
