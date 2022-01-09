@@ -18,6 +18,7 @@
 .complete-btn {
   margin-right: 10px;
   margin-left: 5px;
+  position: -webkit-sticky;
   position: sticky;
   transform: scale(1.5);
   cursor: pointer;
@@ -27,8 +28,8 @@
   border-radius: 50%;
   vertical-align: middle;
   border: 1px solid #ddd;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   outline: none;
   cursor: pointer;
   transition: all 0.1s;
@@ -67,7 +68,7 @@
 .todo-name {
   overflow: auto;
   overflow-wrap: anywhere;
-  margin-right: 3.5rem;
+  margin-right: 4rem;
   display: flex;
   flex: 1;
   transition: all 0.3s;
