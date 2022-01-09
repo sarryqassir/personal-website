@@ -30,10 +30,12 @@
 .todo-input {
   width: 70%;
   height: 30px;
+  padding: 0px 3px;
 }
 
 .todo-input::placeholder {
-  padding-left: 3px;
+  color: black;
+  opacity: 75%;
 }
 
 .fa-plus {
