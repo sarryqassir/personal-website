@@ -5,7 +5,6 @@ import { /*React*/ useLayoutEffect, useState } from "react";
 // this functionality may be built into submit types, but only for forms? not sure, couldn't get it to work
 export const submitOnEnter = (e) => {
   if (e.key === "Enter") {
-    console.log("sumbitOnEnter");
     e.preventDefault();
     e.SubmitEvent();
   }
