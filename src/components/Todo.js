@@ -4,7 +4,6 @@ import { debounce } from "lodash";
 
 function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   const [editting, setEditting] = useState(false);
-  const [hoveringDelete, setHoveringDelete] = useState(false);
   const [tempName, setTempName] = useState("");
 
   const inputRef = useRef(null);
@@ -23,14 +22,14 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   }
 
   function handleDelete(e) {
-    if (!e.shiftKey) {
-      window.confirm("Are you sure you want to delete this?");
-    }
-    deleteTodo(todo.id);
+    if (e.shiftKey) deleteTodo(todo.id);
+    else
+      window.confirm("Are you sure you want to delete this?") &&
+        deleteTodo(todo.id);
   }
 
   function adjustTextAreaSize() {
-    inputRefFake.current.style.width = inputRef.current.offsetWidth + "px";
+    // inputRefFake.current.style.width = inputRef.current.offsetWidth + "px";
     inputRef.current.style.height = inputRefFake.current.scrollHeight + "px";
   }
 
@@ -49,10 +48,12 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   }
 
   useEffect(() => {
-    window.addEventListener("resize", debounce(adjustTextAreaSize, 200));
+    window.addEventListener("resize", adjustTextAreaSize);
+    window.addEventListener("resize", debounce(adjustTextAreaSize, 250));
     adjustTextAreaSize();
     return () => {
-      window.removeEventListener("resize", debounce(adjustTextAreaSize, 100));
+      window.removeEventListener("resize", adjustTextAreaSize);
+      window.removeEventListener("resize", debounce(adjustTextAreaSize, 200));
     };
   }, []);
 
@@ -70,8 +71,8 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
       <span className="todo-name">
         <textarea
           className="main-name"
-          key={todo.id}
           ref={inputRef}
+          key={todo.id}
           type="text"
           value={todo.name}
           onKeyDown={(e) =>
@@ -81,9 +82,10 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           }
           onChange={handleEditTodo}
           onSubmit={() => setEditting(!editting)}
+          onDoubleClick={toggleInputMode}
+          onBlur={() => document.hasFocus() && setEditting(false)}
           readOnly={!editting}
           max-rows={-1}
-          onBlur={() => setEditting(false)}
         />
         <textarea
           className="height-adjuster"
@@ -98,6 +100,7 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
         <button
           className="edit-btn"
           type="button"
+          onMouseDown={(e) => e.preventDefault()}
           onClick={toggleInputMode}
           title="Edit"
         >
@@ -110,18 +113,13 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
         <button
           className="delete-btn"
           type="button"
-          title="Delete"
-          onClick={handleDelete}
-          onMouseOver={() => setHoveringDelete(true)}
-          onMouseOut={() => setHoveringDelete(false)}
+          title={editting ? "Cancel Edit" + <kbd>Escape</kbd> : "Delete"}
+          onClick={(e) => (editting ? cancelEdit() : handleDelete(e))}
+          // Pevents blur event so onclick can register before text content's onblur goes off, which could cause conflict (https://stackoverflow.com/a/57630197)
+          onMouseDown={(e) => e.preventDefault()}
         >
-          <i
-            className={
-              hoveringDelete
-                ? "fa-solid fa-trash-arrow-up"
-                : "fa-solid fa-trash"
-            }
-          />
+          {/* make xmark red */}
+          <i className={editting ? "fa-solid fa-xmark" : "fa-solid fa-trash"} />
         </button>
       </div>
     </label>
