@@ -40,6 +40,8 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
     setTempName(inputRef.current.value);
     inputRef.current.value = "";
     inputRef.current.value = tempName;
+    todo.name.trim();
+    if (todo.name === "") deleteTodo(todo.id);
   }
 
   function cancelEdit(e) {
