@@ -3,7 +3,14 @@
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
+  scrollbar-gutter: stable both-edges;
+  /* Works on Firefox */
+  scrollbar-width: thin;
 }
+
+/* *::-webkit-scrollbar {
+  width: 8px;
+} */
 
 .home,
 .services,
@@ -38,23 +45,6 @@
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
-}
-
-/* Works on Firefox */
-* {
-  scrollbar-width: thin;
-}
-
-/* Works on Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 8px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-image: url("./assets/transparent-black-50.png");
-  margin-right: 5px !important;
-  border-radius: 20px;
-  /* border: 3px solid; */
 }
 
 /* footer {
