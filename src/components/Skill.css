@@ -1,13 +1,16 @@
-.skill-name {
-  position: absolute;
-  left: 0;
-}
+/* .skill-name {
+} */
 
 .num-rating {
-  position: relative;
-  right: -53%;
+  width: 28px;
+  display: inline-block;
+  /* text-align: left; */
+  margin-left: 5px;
 }
 
 .star-rating span {
   margin-left: 0.05rem;
 }
+
+/* .star-rating {
+} */

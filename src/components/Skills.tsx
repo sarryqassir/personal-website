@@ -1,47 +1,49 @@
 import React, { useState, useMemo } from "react";
-import Skill from "./Skill";
 import "./Skills.css";
-import skills from "./skills.json";
+import skillsData from "./skillsData.json";
 import { v4 as uuidv4 } from "uuid";
 import { useTransition, animated } from "react-spring";
 import ReactTooltip from "react-tooltip";
-import { capitalizeFirst } from "./Utils.js";
+import { capitalizeFirst } from "./Utils";
+import Skill from "./Skill";
+
+const skills = skillsData.skills;
 
 function Skills() {
-  const [search, setSearch] = useState("");
-  const [sortOrder, setSortOrder] = useState(false);
-  const [sorting, setSorting] = useState("rating");
+  const [search, setSearch] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<boolean>(false);
+  const [sorting, setSorting] = useState<string>("rating");
 
   useMemo(
     () =>
-      skills.skills.sort((a, b) =>
+      skills.sort((a: any, b: any) =>
         (sortOrder ? a[sorting] > b[sorting] : a[sorting] < b[sorting]) ? 1 : -1
       ),
     [sortOrder, sorting]
-  );
+  ); // template , generic?
 
-  function handleSort(item) {
-    if (sorting !== item) {
-      setSorting(item);
+  function handleSort(name: string) {
+    if (sorting !== name) {
+      setSorting(name);
       setSortOrder(false);
     } else setSortOrder(!sortOrder);
   }
 
-  const dynamicSortIcon = (name) =>
+  const dynamicSortIcon = (name: string) =>
     sorting === name
       ? sortOrder
         ? "fa-solid fa-sort-up"
         : "fa-solid fa-sort-down"
       : "fa-solid fa-sort";
 
-  const dynamicTooltip = (name) =>
+  const dynamicTooltip = (name: string) =>
     sorting === name
       ? sortOrder
         ? "Ascending"
         : "Descending"
       : "Sort by " + capitalizeFirst(name);
 
-  const filteredSkills = skills.skills.filter((skill) =>
+  const filteredSkills = skills.filter((skill) =>
     skill.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -52,7 +54,7 @@ function Skills() {
       y: (height += 33) - 33,
     })),
     {
-      key: (item) => item.name,
+      key: (item: { name: string }) => item.name,
       from: { height: 0, opacity: 0, y: 0 },
       leave: { height: 0, opacity: 0, y: 0 },
       enter: ({ y }) => ({ y, height: 0, opacity: 1 }),
@@ -63,7 +65,7 @@ function Skills() {
   const fadeInListSkills = transition((style, item, t, index) => {
     return (
       <animated.ul
-        style={{ zIndex: skills.skills.length - index, ...style }}
+        style={{ zIndex: skills.length - index, ...style }}
         className="skills-list"
       >
         <Skill
@@ -71,7 +73,6 @@ function Skills() {
           key={uuidv4()}
           name={item.name}
           rating={item.rating}
-          data={item}
         />
       </animated.ul>
     );

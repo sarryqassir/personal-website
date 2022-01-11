@@ -34,6 +34,8 @@ h1 {
     "Lucida Sans", Arial, sans-serif;
   /* transition: all 0.3s linear; */
   padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .skill-item:hover {

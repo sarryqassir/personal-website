@@ -11,7 +11,7 @@ function App() {
     <HashRouter>
       <Navbar />
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/todolist" element={<TodoListApp />} />
       </Routes>
     </HashRouter>

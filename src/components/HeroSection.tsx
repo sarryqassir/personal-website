@@ -2,34 +2,41 @@ import React, { useRef, useState, useEffect } from "react";
 // import "../App.css";
 import { Button } from "./Button";
 import "./HeroSection.css";
-import skills from "./skills.json";
+import skillsData from "./skillsData.json";
 import assets from "../assets/index";
 import { calculateAge } from "./Utils";
 
-function HeroSection() {
-  const [count, setCount] = useState(0);
-  const [muted, setMuted] = useState(true);
-  const [srcVid, setSrcVid] = useState(assets.videos[skills.bgVids[0].vid]);
+const bgVids = skillsData.bgVids;
 
-  const bgVidRef = useRef(null);
+function HeroSection() {
+  const [count, setCount] = useState<number>(0);
+  const [muted, setMuted] = useState<boolean>(true);
+  const [srcVid, setSrcVid] = useState(assets.videos[bgVids[0].vid]);
+
+  const bgVidRef = useRef<HTMLVideoElement>(null);
 
   const mainImgRef = useRef(null);
 
   const handlePlayVideo = () => {
-    bgVidRef.current.paused && bgVidRef.current.style.display !== "none"
-      ? bgVidRef.current.play()
-      : bgVidRef.current.pause();
+    if (bgVidRef.current) {
+      bgVidRef.current.paused && bgVidRef.current.style.display !== "none"
+        ? bgVidRef.current.play()
+        : bgVidRef.current.pause();
+    }
   };
 
   const heroContainerStyle = useRef(null);
   const handleToggleVideo = () => {
-    bgVidRef.current.style.display === "none"
-      ? (bgVidRef.current.style.display = "initial")
-      : (bgVidRef.current.style.display = "none");
+    if (bgVidRef.current && heroContainerStyle.current) {
+      bgVidRef.current.style.display === "none"
+        ? (bgVidRef.current.style.display = "initial")
+        : (bgVidRef.current.style.display = "none");
 
-    heroContainerStyle.current.style.backgroundColor === "lightblue"
-      ? (heroContainerStyle.current.style.backgroundColor = "initial")
-      : (heroContainerStyle.current.style.backgroundColor = "lightblue");
+      if (heroContainerStyle.current.style)
+        heroContainerStyle.current.style.backgroundColor === "lightblue"
+          ? (heroContainerStyle.current.style.backgroundColor = "initial")
+          : (heroContainerStyle.current.style.backgroundColor = "lightblue");
+    }
   };
 
   const handleToggleMute = () => {
@@ -42,12 +49,12 @@ function HeroSection() {
   });
 
   const handleChangeVideo = () => {
-    if (count >= skills.bgVids.length - 1) setCount(0);
+    if (count >= bgVids.length - 1) setCount(0);
     else setCount(count + 1);
   };
 
   useEffect(() => {
-    setSrcVid(assets.videos[skills.bgVids[count].vid]);
+    setSrcVid(assets.videos[bgVids[count].vid]);
   }, [count]);
 
   const handleImgClick = () => {
@@ -67,7 +74,7 @@ function HeroSection() {
           key={srcVid}
           ref={bgVidRef}
           poster={assets.images.alhamdulillah}
-          alt={skills.bgVids[count].sum}
+          alt={bgVids[count].sum}
           autoPlay
           loop
           playsInline
@@ -130,9 +137,9 @@ function HeroSection() {
       </div>
       <details>
         <summary title="Expand to read more about the video">
-          {JSON.stringify(skills.bgVids[count].sum).replace(/"/g, "")}
+          {JSON.stringify(bgVids[count].sum).replace(/"/g, "")}
         </summary>
-        {JSON.stringify(skills.bgVids[count].desc).replace(/"/g, "")}
+        {JSON.stringify(bgVids[count].desc).replace(/"/g, "")}
       </details>
     </div>
   );
