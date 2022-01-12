@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-// import "../App.css";
 import { Button } from "./Button";
 import "./HeroSection.css";
 import skillsData from "./skillsData.json";
@@ -11,11 +10,12 @@ const bgVids = skillsData.bgVids;
 function HeroSection() {
   const [count, setCount] = useState<number>(0);
   const [muted, setMuted] = useState<boolean>(true);
-  const [srcVid, setSrcVid] = useState(assets.videos[bgVids[0].vid]);
 
   const bgVidRef = useRef<HTMLVideoElement>(null);
 
-  const mainImgRef = useRef(null);
+  const mainImgRef = useRef<HTMLImageElement>(null);
+
+  const heroContainerStyle = useRef<HTMLDivElement>(null);
 
   const handlePlayVideo = () => {
     if (bgVidRef.current) {
@@ -25,42 +25,42 @@ function HeroSection() {
     }
   };
 
-  const heroContainerStyle = useRef(null);
   const handleToggleVideo = () => {
     if (bgVidRef.current && heroContainerStyle.current) {
       bgVidRef.current.style.display === "none"
         ? (bgVidRef.current.style.display = "initial")
         : (bgVidRef.current.style.display = "none");
 
-      if (heroContainerStyle.current.style)
-        heroContainerStyle.current.style.backgroundColor === "lightblue"
-          ? (heroContainerStyle.current.style.backgroundColor = "initial")
-          : (heroContainerStyle.current.style.backgroundColor = "lightblue");
+      heroContainerStyle.current.style.backgroundColor === "lightblue"
+        ? (heroContainerStyle.current.style.backgroundColor = "initial")
+        : (heroContainerStyle.current.style.backgroundColor = "lightblue");
     }
   };
 
   const handleToggleMute = () => {
-    bgVidRef.current.pause();
-    setMuted(!muted);
+    if (bgVidRef.current) {
+      bgVidRef.current.pause();
+      setMuted(!muted);
+    }
   };
 
   useEffect(() => {
-    bgVidRef.current.muted = muted;
+    if (bgVidRef.current) {
+      bgVidRef.current.muted = muted;
+    }
   });
 
   const handleChangeVideo = () => {
-    if (count >= bgVids.length - 1) setCount(0);
+    if (count >= assets.videos.length - 1) setCount(0);
     else setCount(count + 1);
   };
 
-  useEffect(() => {
-    setSrcVid(assets.videos[bgVids[count].vid]);
-  }, [count]);
-
   const handleImgClick = () => {
-    mainImgRef.current.style.opacity > 0.01
-      ? (mainImgRef.current.style.opacity = 0.01)
-      : (mainImgRef.current.style.opacity = 1);
+    if (mainImgRef.current) {
+      mainImgRef.current.style.opacity > "0.01"
+        ? (mainImgRef.current.style.opacity = "0.01")
+        : (mainImgRef.current.style.opacity = "1");
+    }
   };
 
   return (
@@ -71,15 +71,14 @@ function HeroSection() {
     >
       <div className="bgVid-container">
         <video
-          key={srcVid}
+          key={String(assets.videos[count])}
           ref={bgVidRef}
-          poster={assets.images.alhamdulillah}
-          alt={bgVids[count].sum}
+          poster={assets.alhamdulillah}
           autoPlay
           loop
           playsInline
         >
-          <source src={srcVid} type="video/mp4" />
+          <source src={assets.videos[count]} type="video/mp4" />
         </video>
       </div>
       <h1>About me</h1>
@@ -90,7 +89,7 @@ function HeroSection() {
       <img
         className="hero-img"
         ref={mainImgRef}
-        src={assets.images.tarik}
+        src={assets.tarikKids}
         alt="placeholder for myself"
         width="460"
         height="460"
@@ -106,8 +105,7 @@ function HeroSection() {
       </p>
       <div className="hero-btns">
         <Button
-          title="Toggle mute the video"
-          className="btns"
+          title="Toggle Mute"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
           onClick={handleToggleMute}
@@ -119,7 +117,7 @@ function HeroSection() {
           />
         </Button>
         <Button
-          className="btns"
+          title="Toggle Video"
           buttonStyle="btn--primary"
           buttonSize="btn--large"
           onClick={handleToggleVideo}
@@ -127,7 +125,7 @@ function HeroSection() {
           Toggle Video
         </Button>
         <Button
-          className="btns"
+          title="Change Video"
           buttonStyle="btn--primary"
           buttonSize="btn--large"
           onClick={handleChangeVideo}

@@ -5,9 +5,16 @@ import "./TodoListApp.css";
 
 const LOCAL_STORAGE_KEY = "todoListApp.todos";
 
+type Todos = {
+  id: string;
+  name: string;
+  complete: boolean;
+  initDate: Date;
+};
+
 function TodoListApp() {
-  const [todos, setTodos] = useState([]);
-  const todoNameRef = useRef();
+  const [todos, setTodos] = useState<Todos[]>([]);
+  const todoNameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
@@ -18,17 +25,18 @@ function TodoListApp() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
   }, [todos]);
 
-  function toggleTodo(id) {
+  function toggleTodo(id: string) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
+    if (!todo) return;
     todo.complete = !todo.complete;
     setTodos(newTodos);
   }
 
   // filter white space
-  function handleAddTodo(e) {
+  function handleAddTodo(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!todoNameRef.current?.value) return;
     const name = todoNameRef.current.value;
-    if (!name) return;
     setTodos((prevTodos) => {
       return [
         ...prevTodos,
@@ -40,7 +48,7 @@ function TodoListApp() {
         },
       ];
     });
-    todoNameRef.current.value = null;
+    todoNameRef.current.value = "";
   }
 
   //   function handleMoveTodos() {
@@ -48,21 +56,26 @@ function TodoListApp() {
   //     setTodos(newTodos);
   //   }
 
-  function deleteTodo(id) {
+  function deleteTodo(id: string) {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   }
 
   // trim whitespace after edit
-  function editTodo(id, e, cancel = false) {
+  function editTodo<
+    T extends string | React.KeyboardEvent<HTMLTextAreaElement>
+  >(id: string, e: T, cancel = false) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
-    cancel ? (todo.name = e) : (todo.name = e.target.value);
+    if (!todo) return;
+    T: string ? (todo.name = e) : (todo.name = e.target.value);
     setTodos(newTodos);
   }
 
   function cancelAdd() {
-    todoNameRef.current.value = null;
+    if (todoNameRef.current) {
+      todoNameRef.current.value = "";
+    }
   }
 
   return (

@@ -2,12 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Todo.css";
 import { debounce } from "lodash";
 
-function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
-  const [editting, setEditting] = useState(false);
-  const [tempName, setTempName] = useState("");
+interface Props {
+  todo: {};
+}
 
-  const inputRef = useRef(null);
-  const inputRefFake = useRef(null);
+function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
+  const [editting, setEditting] = useState<boolean>(false);
+  const [tempName, setTempName] = useState<string>("");
+
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRefFake = useRef<HTMLTextAreaElement>(null);
 
   //use effect to actually set the main state name?
 
@@ -15,10 +19,12 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
     toggleTodo(todo.id);
   }
 
-  function handleEditTodo(e) {
-    inputRef.current.style.height = "0px";
-    adjustTextAreaSize();
-    editTodo(todo.id, e);
+  function handleEditTodo(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (inputRef.current) {
+      inputRef.current.style.height = "0px";
+      adjustTextAreaSize();
+      editTodo(todo.id, e);
+    }
   }
 
   function handleDelete(e) {
@@ -29,22 +35,26 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
   }
 
   function adjustTextAreaSize() {
-    // inputRefFake.current.style.width = inputRef.current.offsetWidth + "px";
-    inputRef.current.style.height = inputRefFake.current.scrollHeight + "px";
+    if (inputRef.current && inputRefFake.current) {
+      // inputRefFake.current.style.width = inputRef.current.offsetWidth + "px";
+      inputRef.current.style.height = inputRefFake.current.scrollHeight + "px";
+    }
   }
 
   function toggleInputMode() {
-    adjustTextAreaSize();
-    setEditting(!editting);
-    inputRef.current.focus();
-    setTempName(inputRef.current.value);
-    inputRef.current.value = "";
-    inputRef.current.value = tempName;
-    todo.name.trim();
-    if (todo.name === "") deleteTodo(todo.id);
+    if (inputRef.current) {
+      adjustTextAreaSize();
+      setEditting(!editting);
+      inputRef.current.focus();
+      setTempName(inputRef.current.value);
+      inputRef.current.value = "";
+      inputRef.current.value = tempName;
+      todo.name.trim();
+      if (todo.name === "") deleteTodo(todo.id);
+    }
   }
 
-  function cancelEdit(e) {
+  function cancelEdit() {
     setEditting(!editting);
     editTodo(todo.id, tempName, true);
   }
@@ -75,7 +85,6 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           className="main-name"
           ref={inputRef}
           key={todo.id}
-          type="text"
           value={todo.name}
           onKeyDown={(e) =>
             e.key === "Enter"
@@ -116,7 +125,7 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           className="delete-btn"
           type="button"
           title={editting ? "Cancel Edit" + <kbd>Escape</kbd> : "Delete"}
-          onClick={(e) => (editting ? cancelEdit() : handleDelete(e))}
+          onClick={(e) => (editting ? cancelEdit(e) : handleDelete(e))}
           // Pevents blur event so onclick can register before text content's onblur goes off, which could cause conflict (https://stackoverflow.com/a/57630197)
           onMouseDown={(e) => e.preventDefault()}
         >
