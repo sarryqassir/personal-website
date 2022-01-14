@@ -2,32 +2,46 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Todo.css";
 import { debounce } from "lodash";
 
-interface Props {
-  todo: {};
+export type TodoItem = {
+  id: string;
+  name: string;
+  complete: boolean;
+  initDate: Date;
+};
+
+export interface TodoPropsT {
+  toggleTodo: (id: string) => void;
+  editTodo: (
+    id: string,
+    e: string | React.KeyboardEvent<HTMLTextAreaElement>
+  ) => void;
+  deleteTodo: (id: string) => void;
 }
 
-function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
+function Todo({
+  todo,
+  toggleTodo,
+  editTodo,
+  deleteTodo,
+}: TodoPropsT & { todo: TodoItem }) {
   const [editting, setEditting] = useState<boolean>(false);
   const [tempName, setTempName] = useState<string>("");
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputRefFake = useRef<HTMLTextAreaElement>(null);
 
-  //use effect to actually set the main state name?
-
   function handleTodoClick() {
     toggleTodo(todo.id);
   }
 
   function handleEditTodo(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (inputRef.current) {
-      inputRef.current.style.height = "0px";
-      adjustTextAreaSize();
-      editTodo(todo.id, e);
-    }
+    if (!inputRef.current) return;
+    inputRef.current.style.height = "0px";
+    adjustTextAreaSize();
+    editTodo(todo.id, e);
   }
 
-  function handleDelete(e) {
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (e.shiftKey) deleteTodo(todo.id);
     else
       window.confirm("Are you sure you want to delete this?") &&
@@ -56,7 +70,7 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
 
   function cancelEdit() {
     setEditting(!editting);
-    editTodo(todo.id, tempName, true);
+    editTodo(todo.id, tempName);
   }
 
   useEffect(() => {
@@ -89,9 +103,9 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           onKeyDown={(e) =>
             e.key === "Enter"
               ? toggleInputMode()
-              : e.key === "Escape" && cancelEdit(e)
+              : e.key === "Escape" && cancelEdit
           }
-          onChange={handleEditTodo}
+          onChange={(e) => handleEditTodo}
           onSubmit={() => setEditting(!editting)}
           onDoubleClick={toggleInputMode}
           onBlur={() => document.hasFocus() && setEditting(false)}
@@ -125,11 +139,10 @@ function Todo({ todo, toggleTodo, editTodo, deleteTodo }) {
           className="delete-btn"
           type="button"
           title={editting ? "Cancel Edit" + <kbd>Escape</kbd> : "Delete"}
-          onClick={(e) => (editting ? cancelEdit(e) : handleDelete(e))}
+          onClick={(e) => (editting ? cancelEdit : handleDelete(e))}
           // Pevents blur event so onclick can register before text content's onblur goes off, which could cause conflict (https://stackoverflow.com/a/57630197)
           onMouseDown={(e) => e.preventDefault()}
         >
-          {/* make xmark red */}
           <i className={editting ? "fa-solid fa-xmark" : "fa-solid fa-trash"} />
         </button>
       </div>

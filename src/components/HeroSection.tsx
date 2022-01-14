@@ -2,10 +2,17 @@ import React, { useRef, useState, useEffect } from "react";
 import { Button } from "./Button";
 import "./HeroSection.css";
 import skillsData from "./skillsData.json";
-import assets from "../assets/index";
+import * as assets from "../assets/index";
 import { calculateAge } from "./Utils";
 
 const bgVids = skillsData.bgVids;
+
+const videos = [
+  assets.zombsHighlights,
+  assets.tarikCereal,
+  assets.tarikOverpass,
+  assets.twistzzSitDown,
+];
 
 function HeroSection() {
   const [count, setCount] = useState<number>(0);
@@ -51,7 +58,7 @@ function HeroSection() {
   });
 
   const handleChangeVideo = () => {
-    if (count >= assets.videos.length - 1) setCount(0);
+    if (count >= videos.length - 1) setCount(0);
     else setCount(count + 1);
   };
 
@@ -71,14 +78,14 @@ function HeroSection() {
     >
       <div className="bgVid-container">
         <video
-          key={String(assets.videos[count])}
+          key={String(videos[count])}
           ref={bgVidRef}
           poster={assets.alhamdulillah}
           autoPlay
           loop
           playsInline
         >
-          <source src={assets.videos[count]} type="video/mp4" />
+          <source src={videos[count]} type="video/mp4" />
         </video>
       </div>
       <h1>About me</h1>

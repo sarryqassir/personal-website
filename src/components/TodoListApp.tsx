@@ -1,23 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import TodoList from "./TodoList";
+import Todo, { TodoPropsT, TodoItem } from "./Todo";
 import { v4 as uuidv4 } from "uuid";
 import "./TodoListApp.css";
 
 const LOCAL_STORAGE_KEY = "todoListApp.todos";
 
-type Todos = {
-  id: string;
-  name: string;
-  complete: boolean;
-  initDate: Date;
-};
-
 function TodoListApp() {
-  const [todos, setTodos] = useState<Todos[]>([]);
+  const [todos, setTodos] = useState<TodoItem[]>([]);
   const todoNameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    const storedTodos: TodoItem[] = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEY)!
+    );
     if (storedTodos) setTodos(storedTodos);
   }, []);
 
@@ -27,14 +22,15 @@ function TodoListApp() {
 
   function toggleTodo(id: string) {
     const newTodos = [...todos];
+    // non-null assetion operator (!) could be used, but edge cases haven't been tested
+    // such as if the conditions for the deletion are met/ object is deleted before this function
     const todo = newTodos.find((todo) => todo.id === id);
     if (!todo) return;
     todo.complete = !todo.complete;
     setTodos(newTodos);
   }
 
-  // filter white space
-  function handleAddTodo(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleAddTodo() {
     if (!todoNameRef.current?.value) return;
     const name = todoNameRef.current.value;
     setTodos((prevTodos) => {
@@ -61,14 +57,16 @@ function TodoListApp() {
     setTodos(newTodos);
   }
 
-  // trim whitespace after edit
-  function editTodo<
-    T extends string | React.KeyboardEvent<HTMLTextAreaElement>
-  >(id: string, e: T, cancel = false) {
+  function editTodo(
+    id: string,
+    e: string | React.KeyboardEvent<HTMLTextAreaElement>
+  ) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
     if (!todo) return;
-    T: string ? (todo.name = e) : (todo.name = e.target.value);
+    typeof e === "string"
+      ? (todo.name = e)
+      : (todo.name = e.currentTarget.value);
     setTodos(newTodos);
   }
 
@@ -97,8 +95,8 @@ function TodoListApp() {
               type="text"
               onKeyDown={(e) =>
                 e.key === "Enter"
-                  ? handleAddTodo(e)
-                  : e.key === "Escape" && cancelAdd(e)
+                  ? handleAddTodo()
+                  : e.key === "Escape" && cancelAdd()
               }
             />
             <button
@@ -116,6 +114,30 @@ function TodoListApp() {
           deleteTodo={deleteTodo}
         />
       </div>
+    </div>
+  );
+}
+
+// probably going to be integrated to compontent above/ something to merge with skills
+export function TodoList({
+  todos,
+  toggleTodo,
+  editTodo,
+  deleteTodo,
+}: TodoPropsT & { todos: TodoItem[] }) {
+  return (
+    <div className="todo-list">
+      {todos.map((todo: TodoItem) => {
+        return (
+          <Todo
+            key={todo.id}
+            editTodo={editTodo}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+            todo={todo}
+          />
+        );
+      })}
     </div>
   );
 }

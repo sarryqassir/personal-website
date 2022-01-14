@@ -1,10 +1,10 @@
 import React from "react";
-import Todo from "./Todo";
+import Todo, { TodoItem } from "./Todo";
 
-function TodoList({ todos, toggleTodo, editTodo, deleteTodo }) {
+export function TodoList(todos: TodoItem[]) {
   return (
     <div className="todo-list">
-      {todos.map((todo) => {
+      {/* {todos.map((todo) => {
         return (
           <Todo
             key={todo.id}
@@ -14,9 +14,7 @@ function TodoList({ todos, toggleTodo, editTodo, deleteTodo }) {
             todo={todo}
           />
         );
-      })}
+      })} */}
     </div>
   );
 }
-
-export default TodoList;
