@@ -64,7 +64,7 @@ function Skills() {
 
   const fadeInListSkills = transition((style, item, t, index) => {
     return (
-      <animated.ul
+      <animated.li
         style={{ zIndex: skills.length - index, ...style }}
         className="skills-list"
       >
@@ -74,7 +74,7 @@ function Skills() {
           name={item.name}
           rating={item.rating}
         />
-      </animated.ul>
+      </animated.li>
     );
   });
 
@@ -119,7 +119,7 @@ function Skills() {
           />
         </div>
       </div>
-      <div style={{ height }}>{fadeInListSkills}</div>
+      <ul style={{ height }}>{fadeInListSkills}</ul>
       <span className="skills-madeby-text">
         <p>This project was made using React</p>
       </span>

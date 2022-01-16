@@ -14,7 +14,7 @@ function Skill(props: {
   const full = <i className="fa-solid fa-star" style={{ color: "gold" }} />;
 
   return (
-    <li className={props.className} style={props.style}>
+    <span className={props.className} style={props.style}>
       <span className="skill-name">{props.name}</span>
       <div className="skill-rating">
         <Rating
@@ -27,7 +27,7 @@ function Skill(props: {
         />
         <span className="num-rating">{props.rating}</span>
       </div>
-    </li>
+    </span>
   );
 }
 

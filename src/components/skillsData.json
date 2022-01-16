@@ -17,7 +17,7 @@
     { "name": "Python", "rating": 3 },
     { "name": "Object Oriented Programming", "rating": 4 },
     { "name": "Data Structures & Algorithms", "rating": 2 },
-    { "name": "Typescript", "rating": 2 },
+    { "name": "Typescript", "rating": 3.5 },
     { "name": "Google", "rating": 5 }
   ],
   "bgVids": [
