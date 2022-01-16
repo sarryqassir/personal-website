@@ -5,8 +5,8 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  position: -webkit-sticky;
   position: sticky;
+  position: -webkit-sticky;
   top: 0;
   z-index: 99;
   font-family: "PT Sans", sans-serif;

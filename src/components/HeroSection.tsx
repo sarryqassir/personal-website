@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Button } from "./Button";
+import Button from "./Button";
 import "./HeroSection.css";
 import skillsData from "./skillsData.json";
 import * as assets from "../assets/index";
