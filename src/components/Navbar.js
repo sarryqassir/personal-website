@@ -66,7 +66,6 @@ function Navbar() {
             onClick={closeMobileMenu}
           >
             {currentUser ? "Account" : "Sign Up"}
-            {console.log(currentUser)}
           </Link>
         </li>
       </ul>
