@@ -31,6 +31,17 @@
   text-align: center;
   margin-top: 0.5rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-delete {
+  background: red;
+  border: none;
+  width: 15vh;
+  height: 2rem;
+  font-size: 18px;
 }
 
 .account-body-container {

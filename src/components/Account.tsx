@@ -19,6 +19,10 @@ function Account() {
     }
   }
 
+  function handleDelete() {
+    console.log("delete account (soon)");
+  }
+
   return (
     <div className="account-container">
       <div className="account-container-div">
@@ -39,6 +43,9 @@ function Account() {
         <div className="account-button-div">
           <button className="btn-link" onClick={handleSignout}>
             Sign Out
+          </button>
+          <button className="btn-delete" onClick={handleDelete}>
+            Delete Account
           </button>
         </div>
       </div>
