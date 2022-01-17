@@ -69,9 +69,10 @@ function Todo({
 
   useEffect(() => {
     if (!editting) {
-      editTodo(todo.id, todo.name.trim());
+      if (todo.name !== todo.name.trim()) editTodo(todo.id, todo.name.trim());
       if (todo.name === "") deleteTodo(todo.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editting]);
 
   /** Cancels edit mode and sets the todo name back to its original state when the edit was initiated */
