@@ -3,6 +3,10 @@ import {
   User,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  updateEmail as authUpdateEmail,
+  updatePassword as authUpdatePassword,
+  reauthenticateWithCredential,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -12,6 +16,9 @@ interface authItems {
   signup: (email: string, password: string) => void;
   signin: (email: string, password: string) => void;
   signout: () => void;
+  resetPassword: (email: string) => void;
+  updateEmail: (email: string) => void;
+  updatePassword: (password: string) => void;
 }
 
 /** Holds context, initialized with the createContext hook with properties set to null */
@@ -20,6 +27,9 @@ const AuthContext = React.createContext<authItems>({
   signup: (email, password) => {},
   signin: (email, password) => {},
   signout: () => {},
+  resetPassword: (email) => {},
+  updateEmail: (email) => {},
+  updatePassword: (password) => {},
 });
 
 /** Returns auth context */
@@ -40,7 +50,19 @@ export function AuthProvider({ children }: any) {
   }
 
   function signout() {
-    auth.signOut();
+    return auth.signOut();
+  }
+
+  function resetPassword(email: string) {
+    return sendPasswordResetEmail(auth, email);
+  }
+
+  function updateEmail(email: string) {
+    if (currentUser) return authUpdateEmail(currentUser, email);
+  }
+
+  function updatePassword(password: string) {
+    if (currentUser) return authUpdatePassword(currentUser, password);
   }
 
   useEffect(() => {
@@ -52,7 +74,15 @@ export function AuthProvider({ children }: any) {
     return unsubscribe;
   }, []);
 
-  const value: authItems = { currentUser, signup, signin, signout };
+  const value: authItems = {
+    currentUser,
+    signup,
+    signin,
+    signout,
+    resetPassword,
+    updateEmail,
+    updatePassword,
+  };
 
   return (
     <AuthContext.Provider value={value}>

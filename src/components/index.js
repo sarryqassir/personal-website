@@ -5,3 +5,4 @@ export { default as Signin } from "./Signin";
 export { default as TodoListApp } from "./TodoListApp";
 export { default as Account } from "./Account";
 export { default as ForgotPassword } from "./ForgotPassword";
+export { default as UpdateAccount } from "./UpdateAccount";
