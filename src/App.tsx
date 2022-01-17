@@ -16,10 +16,11 @@ import {
   Signin,
   Account,
   ForgotPassword,
+  UpdateAccount,
 } from "./components/index";
 
-/** Protects child route from users that aren't signed in, redirecting them to the sign in page.  */
-export const PrivateRoute = (redir: { redir: string }) => {
+/** Protects child route from users that aren't signed in, redirecting them to the sign in page. */
+export const PrivateRoute = ({ redir = "signin" }) => {
   const { currentUser } = useAuth();
   return currentUser ? <Outlet /> : <Navigate to={"/" + redir} />;
 };
@@ -34,9 +35,13 @@ function App() {
           <Route path="/todolist" element={<TodoListApp />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           {/* Protected Route  */}
-          <Route path="/account" element={<PrivateRoute redir="signin" />}>
+          <Route path="/account" element={<PrivateRoute />}>
             <Route path="/account" element={<Account />} />
+          </Route>
+          <Route path="/update-account" element={<PrivateRoute />}>
+            <Route path="/update-account" element={<UpdateAccount />} />
           </Route>
         </Routes>
       </AuthProvider>
