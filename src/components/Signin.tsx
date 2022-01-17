@@ -12,6 +12,9 @@ function Signin() {
   /** https://stackoverflow.com/a/70531954 */
   const navigate = useNavigate();
 
+  // https://stackoverflow.com/questions/37811684/how-to-create-credential-object-needed-by-firebase-web-user-reauthenticatewith
+  // https://firebase.google.com/docs/auth/web/manage-users#re-authenticate_a_user
+  // state object to handle authenticating signed in user?
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     if (!emailRef.current?.value || !passwordRef.current?.value) return;
