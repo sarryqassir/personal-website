@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/personal-website/static/css/main.de2294c2.css",
-    "main.js": "/personal-website/static/js/main.0b85fc52.js",
+    "main.js": "/personal-website/static/js/main.829326c1.js",
     "static/media/tarik-overpass.mp4": "/personal-website/static/media/tarik-overpass.764d59598a5a0355b1bb.mp4",
     "static/media/tarik-cereal-4k.mp4": "/personal-website/static/media/tarik-cereal-4k.90fc9443fa096bddd6a5.mp4",
     "static/media/twistzz-sit-the-f-down.mp4": "/personal-website/static/media/twistzz-sit-the-f-down.ce68cda0d34a9438bb82.mp4",
@@ -10,10 +10,10 @@
     "static/media/img-1.jpg": "/personal-website/static/media/img-1.5eacad4e83b7ec5bcea7.jpg",
     "index.html": "/personal-website/index.html",
     "main.de2294c2.css.map": "/personal-website/static/css/main.de2294c2.css.map",
-    "main.0b85fc52.js.map": "/personal-website/static/js/main.0b85fc52.js.map"
+    "main.829326c1.js.map": "/personal-website/static/js/main.829326c1.js.map"
   },
   "entrypoints": [
     "static/css/main.de2294c2.css",
-    "static/js/main.0b85fc52.js"
+    "static/js/main.829326c1.js"
   ]
 }
