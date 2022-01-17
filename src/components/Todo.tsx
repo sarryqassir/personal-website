@@ -13,7 +13,7 @@ export interface TodoPropsT {
   toggleTodo: (id: string) => void;
   editTodo: (
     id: string,
-    e: string | React.KeyboardEvent<HTMLTextAreaElement>
+    e: string | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
   deleteTodo: (id: string) => void;
 }
@@ -34,7 +34,7 @@ function Todo({
     toggleTodo(todo.id);
   }
 
-  function handleEditTodo(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function handleEditTodo(e: React.ChangeEvent<HTMLTextAreaElement>) {
     if (!inputRef.current) return;
     inputRef.current.style.height = "0px";
     adjustTextAreaSize();
@@ -55,21 +55,28 @@ function Todo({
     }
   }
 
+  /** Toggles edit mode and saves the current todo name incase user wants to cancel the edit. */
   function toggleInputMode() {
     if (inputRef.current) {
       adjustTextAreaSize();
       setEditting(!editting);
       inputRef.current.focus();
-      setTempName(inputRef.current.value);
+      setTempName(todo.name);
       inputRef.current.value = "";
       inputRef.current.value = tempName;
-      todo.name.trim();
-      if (todo.name === "") deleteTodo(todo.id);
     }
   }
 
+  useEffect(() => {
+    if (!editting) {
+      editTodo(todo.id, todo.name.trim());
+      if (todo.name === "") deleteTodo(todo.id);
+    }
+  }, [editting]);
+
+  /** Cancels edit mode and sets the todo name back to its original state when the edit was initiated */
   function cancelEdit() {
-    setEditting(!editting);
+    setEditting(false);
     editTodo(todo.id, tempName);
   }
 
@@ -103,12 +110,14 @@ function Todo({
           onKeyDown={(e) =>
             e.key === "Enter"
               ? toggleInputMode()
-              : e.key === "Escape" && cancelEdit
+              : e.key === "Escape" && cancelEdit()
           }
-          onChange={(e) => handleEditTodo}
+          onChange={(e) => handleEditTodo(e)}
           onSubmit={() => setEditting(!editting)}
           onDoubleClick={toggleInputMode}
-          onBlur={() => document.hasFocus() && setEditting(false)}
+          onBlur={() => {
+            document.hasFocus() && setEditting(false);
+          }}
           readOnly={!editting}
           max-rows={-1}
         />

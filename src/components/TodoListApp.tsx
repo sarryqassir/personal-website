@@ -59,7 +59,7 @@ function TodoListApp() {
 
   function editTodo(
     id: string,
-    e: string | React.KeyboardEvent<HTMLTextAreaElement>
+    e: string | React.ChangeEvent<HTMLTextAreaElement>
   ) {
     const newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
