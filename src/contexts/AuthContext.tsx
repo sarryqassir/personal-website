@@ -6,7 +6,9 @@ import {
   sendPasswordResetEmail,
   updateEmail as authUpdateEmail,
   updatePassword as authUpdatePassword,
+  signOut,
   reauthenticateWithCredential,
+  signInAnonymously,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -50,7 +52,7 @@ export function AuthProvider({ children }: any) {
   }
 
   function signout() {
-    return auth.signOut();
+    return signOut(auth);
   }
 
   function resetPassword(email: string) {
