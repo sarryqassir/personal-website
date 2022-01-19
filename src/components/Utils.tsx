@@ -19,7 +19,7 @@ export function useWindowSize() {
   return size;
 }
 
-// Calculate age based on date string
+/** Calculate age based on date string */
 export function calculateAge(dateString: string): number {
   var today = new Date();
   var birthDate = new Date(dateString);
